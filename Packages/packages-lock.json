@@ -1,5 +1,11 @@
 {
   "dependencies": {
+    "com.unity.2d.sprite": {
+      "version": "1.0.0",
+      "depth": 0,
+      "source": "builtin",
+      "dependencies": {}
+    },
     "com.unity.collab-proxy": {
       "version": "1.17.2",
       "depth": 0,
@@ -215,9 +221,9 @@
       "dependencies": {}
     },
     "com.unity.modules.jsonserialize": {
-      "version": "1.0.0",
+      "version": "file:D:/App/Unity/Editors/2021.3.11f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.modules.jsonserialize",
       "depth": 0,
-      "source": "builtin",
+      "source": "local",
       "dependencies": {}
     },
     "com.unity.modules.particlesystem": {
