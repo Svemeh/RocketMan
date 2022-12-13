@@ -6,28 +6,25 @@ public class karakter : MonoBehaviour
 {
     public Rigidbody2D rocketMan;
     public float fart;
-    //public float fartY;
-
     private float xMovement;
-    private float yMovement; //--- testing
+    //private float yMovement; //--- testing
 
-    void Awake()
+    private void Awake()
     {
         rocketMan = GetComponent<Rigidbody2D>();
     }
 
-    void Update()
+    private void Update()
     {
-        yMovement = Input.GetAxis("Vertical") * fart; //--- testing
+        //yMovement = Input.GetAxis("Vertical") * fart; //--- testing
         xMovement = Input.GetAxis("Horizontal") * fart; 
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         Vector2 velocity = rocketMan.velocity;
         velocity.x = xMovement;
-        //velocity.y = fartY; 
-        velocity.y = yMovement; //--- testing
+        //velocity.y = yMovement; //--- testing
         rocketMan.velocity = velocity;
     }
 }

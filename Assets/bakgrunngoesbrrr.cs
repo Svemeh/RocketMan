@@ -5,7 +5,7 @@ using UnityEngine;
 public class bakgrunngoesbrrr : MonoBehaviour
 {
     [Range(0f, 10f)]
-    public float brrrSpeed = 0.5f; //scrollspeed
+    public float brrrSpeed = 1f; //scrollspeed
     private float offset;
     private Material mat;
     void Start()
@@ -14,7 +14,7 @@ public class bakgrunngoesbrrr : MonoBehaviour
     }
 
     
-    void Update()
+    private void Update()
     {
         offset += (Time.deltaTime * brrrSpeed) / 10f;
         mat.SetTextureOffset("_MainTex", new Vector2(0, offset));
