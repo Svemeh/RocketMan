@@ -9,6 +9,6 @@ public class KULTkAMERA : MonoBehaviour
 
     void Update()
     {
-        kamera.position = new Vector3(kamera.position.x, rocketMan.position.y+2, kamera.position.z);  
+        kamera.position = new Vector3(kamera.position.x, rocketMan.position.y+1.7f, kamera.position.z);  
     }
 }

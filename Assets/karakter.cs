@@ -7,24 +7,43 @@ public class karakter : MonoBehaviour
     public Rigidbody2D rocketMan;
     public float fart;
     private float xMovement;
-    //private float yMovement; //--- testing
+    public Animator anim;
+
+    [SerializeField] GameObject managerObject; // managerObject, defineres i Awake
+    GameManager managerScript; // gameManager script
+
+    private void Start() => anim = GetComponent<Animator>();
 
     private void Awake()
     {
         rocketMan = GetComponent<Rigidbody2D>();
+        managerObject = GameObject.Find("GameManager");
+        managerScript = managerObject.GetComponent<GameManager>();
     }
 
     private void Update()
     {
-        //yMovement = Input.GetAxis("Vertical") * fart; //--- testing
-        xMovement = Input.GetAxis("Horizontal") * fart; 
+        if (managerScript.gameRunning)
+        {
+            xMovement = Input.GetAxis("Horizontal") * fart;
+            if (anim!= null)
+            {
+                anim.Play("character");
+            }
+        }
+        else
+        {
+            if (anim != null)
+            {
+                anim.Play("IdleCharacter");
+            }
+        }
     }
 
     private void FixedUpdate()
     {
         Vector2 velocity = rocketMan.velocity;
         velocity.x = xMovement;
-        //velocity.y = yMovement; //--- testing
         rocketMan.velocity = velocity;
     }
 }

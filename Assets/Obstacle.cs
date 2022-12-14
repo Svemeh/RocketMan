@@ -6,29 +6,39 @@ public class Obstacle : MonoBehaviour
 {
 
     public Rigidbody2D obstacle;
-    [SerializeField] GameObject plane; // bakgrunn, defineres i Awake
-    bakgrunngoesbrrr backgroundScript; // bakgrunn script
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-
-            Rigidbody2D rb = collision.gameObject.GetComponent<Rigidbody2D>(); // kræsj trigger
-        if (rb != null)
-            {
-                Debug.Log("hit");
-            }
-    }
+    [SerializeField] GameObject managerObject; // managerObject, defineres i Awake
+    GameManager managerScript; // gameManager script
 
     private void Awake()
     {
-        plane = GameObject.Find("Plane");
+        managerObject = GameObject.Find("GameManager");
         obstacle = GetComponent<Rigidbody2D>();
-        backgroundScript = plane.GetComponent<bakgrunngoesbrrr>();
+        managerScript = managerObject.GetComponent<GameManager>();
     }
+
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.name == "karakter")
+        {
+            Rigidbody2D rb = collision.gameObject.GetComponent<Rigidbody2D>(); // kræsj trigger
+            if (rb != null)
+            {
+                managerScript.EndGame();
+            }
+        }
+    } // kollisjon stopper spill og sletter obstacles
+
     private void FixedUpdate()
     {
-        Vector2 velocity = obstacle.velocity;
-        velocity = new Vector3(0, -(backgroundScript.brrrSpeed*2), 0); // fart defienert som scrollspeed * 2
-        obstacle.velocity = velocity;
+        if (managerScript.gameRunning)
+        {
+            Vector2 velocity = obstacle.velocity;
+            velocity = new Vector3(0, -(managerScript.brrrSpeed * 2), 0); // fart defienert som scrollspeed * 2
+            obstacle.velocity = velocity;
+        }
+        else
+        {
+            Destroy(obstacle.gameObject); // sletter obstacles upon death
+        }
     }
 }
