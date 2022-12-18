@@ -221,7 +221,7 @@
       "dependencies": {}
     },
     "com.unity.modules.jsonserialize": {
-      "version": "file:D:/App/Unity/Editors/2021.3.11f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.modules.jsonserialize",
+      "version": "file:C:/Program Files/Unity/Hub/Editor/2021.3.11f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.modules.jsonserialize",
       "depth": 0,
       "source": "local",
       "dependencies": {}

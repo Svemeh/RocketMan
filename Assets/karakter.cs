@@ -42,8 +42,15 @@ public class karakter : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (managerScript.gameRunning)
+        {
         Vector2 velocity = rocketMan.velocity;
         velocity.x = xMovement;
         rocketMan.velocity = velocity;
+        }
+        else
+        {
+        rocketMan.velocity = new Vector2(0, 0);
+        }
     }
 }

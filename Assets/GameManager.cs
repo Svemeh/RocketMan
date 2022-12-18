@@ -5,11 +5,14 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField] private AudioSource rocketman;
+    [SerializeField] private AudioSource deathSound;
 
     [Range(0f, 5f)]
     public float brrrSpeed = 1f;
     public float maxSpeed;
     public Rigidbody2D gameManager2D;
+    public GameObject character;
     public bool gameRunning;
      
     [Header("obstacles")]
@@ -28,12 +31,14 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int highScore = 0;
     [SerializeField] private int tid;
 
-    private void Awake() => gameManager2D = GetComponent<Rigidbody2D>();
+    private void Awake() 
+    { 
+    gameManager2D = GetComponent<Rigidbody2D>();
+    }
 
     private void Start()
     {
         brrrSpeed = 0f;
-        HighScoreText.text = "Highscore:";
         HighScoreDisplay.text = highScore.ToString();
         HighScoreDisplay.enabled = true;
         HighScoreText.enabled = true;
@@ -41,11 +46,10 @@ public class GameManager : MonoBehaviour
         spawnPosition = new Vector3(0f, 2.5f, 0f); // reset spawn position til obstacles
         StartCoroutine(PrepStartUp());
     }
-    void OnTriggerEnter2D(Collider2D collision) // når karakter kolliderer med GameManager
+    void OnTriggerEnter2D(Collider2D collision) // nï¿½r karakter kolliderer med GameManager
     {
         if (collision.gameObject.name == "karakter" && gameRunning)
         {
-            Debug.Log("nye obstacles");
             SpawnObstacles();
         }
     }
@@ -70,16 +74,20 @@ public class GameManager : MonoBehaviour
             highScore = points;
             HighScoreDisplay.text = highScore.ToString();
         } //set highscore
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {  
+            Application.Quit();
+        }
     }
     public void StartUp()
     {
-        Debug.Log("startup");
         HighScoreDisplay.enabled = false;
         HighScoreText.enabled = false;
         ExtraText.enabled = false;
         points = 0;
         brrrSpeed = 1f;
         gameRunning = true;
+        rocketman.Play();
         SpawnObstacles();
         StartCoroutine(SpeedController());
     }
@@ -88,12 +96,12 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i <= obstacleCount; i++)
         {
 
-            spawnPosition.y += Random.Range(1.5f, 2f); // 4f, 6f // y = y + Random.Range()
+            spawnPosition.y += Random.Range(2f, 2.5f); // 4f, 6f // y = y + Random.Range()
             spawnPosition.x = Random.Range(-0.7f, 0.7f);
             GameObject newObstacle = Instantiate(obstaclePrefab, spawnPosition, Quaternion.identity);
             Destroy(newObstacle, 10); // sletter etter 10 sek
 
-            if (i == obstacleCount) // etter for(i) fullført
+            if (i == obstacleCount) // etter for(i) fullfï¿½rt
             {
                 gameManager2D.position = new Vector3(0, spawnPosition.y + 2f - 3, 0);
                 spawnPosition = new Vector3(0f, 2.5f, 0f); // reset spawnPosition
@@ -102,20 +110,20 @@ public class GameManager : MonoBehaviour
     }
     public void EndGame()
     {
-        Debug.Log("end");
         gameRunning = false;
         brrrSpeed = 0f;
         HighScoreDisplay.enabled = true;
         HighScoreText.enabled = true;
         ExtraText.enabled = true;
+        rocketman.Stop();
+        deathSound.Play();
+        character.transform.position = new Vector3(0, 0, 0);
         StartCoroutine(PrepStartUp());
     }
     IEnumerator PrepStartUp()
     {
-        Debug.Log("waiting for 5 second");
         tid = 0;
-        yield return new WaitForSeconds(2);
-        Debug.Log("ready to start up");
+        yield return new WaitForSeconds(2.5f);
         while (!Input.anyKey)
         {
             yield return null;
