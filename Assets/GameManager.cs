@@ -44,6 +44,7 @@ public class GameManager : MonoBehaviour
         HighScoreText.enabled = true;
         ExtraText.enabled = true;
         spawnPosition = new Vector3(0f, 2.5f, 0f); // reset spawn position til obstacles
+        rocketman.Play();
         StartCoroutine(PrepStartUp());
     }
     void OnTriggerEnter2D(Collider2D collision) // n�r karakter kolliderer med GameManager
@@ -66,8 +67,12 @@ public class GameManager : MonoBehaviour
     } 
     private void Update()
     {
-        points = (int)Mathf.Round(tid * brrrSpeed); // variable " points "
-        ScoreDisplay.text = points.ToString(); // oppdaterer scoreDisplay 
+        if (gameRunning)
+        {
+            points = (int)Mathf.Round(tid * brrrSpeed); // variable " points "
+            ScoreDisplay.text = points.ToString(); // oppdaterer scoreDisplay 
+
+        }
 
         if (points >= highScore)
         {
@@ -87,7 +92,6 @@ public class GameManager : MonoBehaviour
         points = 0;
         brrrSpeed = 1f;
         gameRunning = true;
-        rocketman.Play();
         SpawnObstacles();
         StartCoroutine(SpeedController());
     }
@@ -115,7 +119,6 @@ public class GameManager : MonoBehaviour
         HighScoreDisplay.enabled = true;
         HighScoreText.enabled = true;
         ExtraText.enabled = true;
-        rocketman.Stop();
         deathSound.Play();
         character.transform.position = new Vector3(0, 0, 0);
         StartCoroutine(PrepStartUp());
@@ -123,7 +126,7 @@ public class GameManager : MonoBehaviour
     IEnumerator PrepStartUp()
     {
         tid = 0;
-        yield return new WaitForSeconds(2.5f);
+        yield return new WaitForSeconds(1f); // kanskje 2.5f ?
         while (!Input.anyKey)
         {
             yield return null;

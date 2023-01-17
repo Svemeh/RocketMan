@@ -1196,7 +1196,7 @@ MonoBehaviour:
   rocketman: {fileID: 1621602493}
   deathSound: {fileID: 1621602494}
   brrrSpeed: 3
-  maxSpeed: 3.5
+  maxSpeed: 3
   gameManager2D: {fileID: 0}
   character: {fileID: 574809988}
   gameRunning: 0
